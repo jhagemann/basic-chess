@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace BasicChess.Models
 {
-    class Board
+    public class Board
     {
-        public Block[,] blocks { get; set; }
+        public Block[,] Blocks { get; set; }
 
         public Board()
         {
-            blocks = new Block[8, 8];
+            Blocks = new Block[8, 8];
             BuildBoard();
         }
 
@@ -23,9 +23,31 @@ namespace BasicChess.Models
             {
                 for (int y = 1; y <= 8; y++)
                 {
-                    blocks[x, y] = new Block(xs[x-1], y);
+                    Blocks[x - 1, y - 1] = new Block(xs[x-1], y);
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            String layout = "";
+            for (int y = 7; y >= 0; y--)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    if (Blocks[x, y].ChessPiece == null)
+                    {
+                        layout += "0\t";
+                    }
+                    else
+                    {
+                        layout += "1\t";
+                    }
+                }
+                layout += "\n";
+                
+            }
+            return layout;            
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BasicChess.Models
 {
-    class Piece
+    public class Piece
     {
         public String Name { get; set; }
         public bool Alive { get; set; }

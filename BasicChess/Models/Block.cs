@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BasicChess.Models
 {
-    class Block
+    public class Block
     {
         public String X { get; set; }
         public int Y { get; set; }
