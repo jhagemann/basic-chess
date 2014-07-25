@@ -18,8 +18,8 @@ namespace BasicChess.Rules
         {
             GameBoard = new Board();
             Players = new Player[2];
-            Players[0] = new Player(1, p1Name, p1Color);
-            Players[1] = new Player(2, p2Name, p2Color);
+            Players[0] = new Player(1, p1Name, p1Color, true);
+            Players[1] = new Player(2, p2Name, p2Color, false);
 
         }
 

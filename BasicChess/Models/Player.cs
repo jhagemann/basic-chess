@@ -13,20 +13,20 @@ namespace BasicChess.Models
         public Piece[] Pieces { get; set; }
         public String Color { get; set; }
 
-        public Player(int id, String name, String color)
+        public Player(int id, String name, String color, bool isUp)
         {
             Id = id;
             Name = name;
             Color = color;
-            BuildPieces();
+            BuildPieces(isUp);
         }
 
-        private void BuildPieces()
+        private void BuildPieces(bool isUp)
         {
             Pieces = new Piece[16];
             for (int i = 0; i < 8; i++)
             {
-                Pieces[i] = new Pawn(Color, i + 1);
+                Pieces[i] = new Pawn(Color, i + 1, isUp);
             }
             Pieces[8] = new Knight(Color, 1);
             Pieces[9] = new Knight(Color, 2);

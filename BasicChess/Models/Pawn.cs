@@ -8,12 +8,14 @@ namespace BasicChess.Models
 {
     public class Pawn : Piece
     {
-        public Pawn(String color, int id)
+        
+        public Pawn(String color, int id, bool isUp)
         {
             Name = "Pawn";
             Alive = true;
             this.Color = color;
             this.Id = id;
+            MaxMoves = 1;
         }
     }
 }

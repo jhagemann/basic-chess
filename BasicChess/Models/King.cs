@@ -14,6 +14,7 @@ namespace BasicChess.Models
             Alive = true;
             Color = color;
             Id = id;
+            MaxMoves = 1;
         }
     }
 }
