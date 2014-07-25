@@ -12,6 +12,7 @@ namespace BasicChess.Models
         public bool Alive { get; set; }
         public String Color { get; set; }
         public int Id { get; set; }
+        public bool HasMoved { get; set; }
         
     }
 }

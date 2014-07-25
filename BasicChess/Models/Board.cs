@@ -13,6 +13,7 @@ namespace BasicChess.Models
         public Board()
         {
             blocks = new Block[8, 8];
+            BuildBoard();
         }
 
         public void BuildBoard()
