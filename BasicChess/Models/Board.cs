@@ -77,11 +77,38 @@ namespace BasicChess.Models
                 {
                     if (Blocks[x, y].ChessPiece == null)
                     {
-                        layout += "0\t";
+                        layout += "-\t";
                     }
                     else
                     {
-                        layout += "1\t";
+                        if (Blocks[x, y].ChessPiece.Name.Equals("Pawn"))
+                        {
+                            layout += "P\t";
+                        }
+                        else if (Blocks[x, y].ChessPiece.Name.Equals("Rook"))
+                        {
+                            layout += "R\t";
+                        }
+                        else if (Blocks[x, y].ChessPiece.Name.Equals("Knight"))
+                        {
+                            layout += "N\t";
+                        }
+                        else if (Blocks[x, y].ChessPiece.Name.Equals("Bishop"))
+                        {
+                            layout += "B\t";
+                        }
+                        else if (Blocks[x, y].ChessPiece.Name.Equals("Queen"))
+                        {
+                            layout += "Q\t";
+                        }
+                        else if (Blocks[x, y].ChessPiece.Name.Equals("King"))
+                        {
+                            layout += "K\t";
+                        }
+                        else
+                        {
+                            layout += "?\t";
+                        }
                     }
                 }
                 layout += "\n";

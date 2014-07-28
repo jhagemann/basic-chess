@@ -13,6 +13,7 @@ namespace BasicChess.Models
         public String Color { get; set; }
         public int Id { get; set; }
         public bool HasMoved { get; set; }
+        public int PlayerId { get; set; }
         //-1 is infinite
         public int MaxMoves { get; set; }
         

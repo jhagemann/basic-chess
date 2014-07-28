@@ -8,13 +8,14 @@ namespace BasicChess.Models
 {
     public class Bishop : Piece
     {
-        public Bishop(String color, int id)
+        public Bishop(String color, int id, int playerId)
         {
             Name = "Bishop";
             Alive = true;
             Color = color;
             Id = id;
             MaxMoves = -1;
+            PlayerId = playerId;
         }
     }
 }

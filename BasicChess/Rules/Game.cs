@@ -18,14 +18,16 @@ namespace BasicChess.Rules
         {
             GameBoard = new Board();
             Players = new Player[2];
-            Players[0] = new Player(1, p1Name, p1Color, true);
-            Players[1] = new Player(2, p2Name, p2Color, false);
+            Players[0] = new Player(1, p1Name, p1Color);
+            Players[1] = new Player(2, p2Name, p2Color);
 
         }
 
         public void SetUpBoard()
         {
             //Add player 1's pieces
+            //Block[0,0] can be visualized at bottom left hand corner of board
+            //player 1 is always on bottom
             GameBoard.Blocks[0, 0].ChessPiece = Players[0].Pieces.First(p => p.Name == "Rook" && p.Id == 1); 
             GameBoard.Blocks[1, 0].ChessPiece = Players[0].Pieces.First(p => p.Name == "Knight" && p.Id == 1);
             GameBoard.Blocks[2, 0].ChessPiece = Players[0].Pieces.First(p => p.Name == "Bishop" && p.Id == 1);

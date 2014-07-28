@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BasicChess.Rules
 {
-    class MoveManager
+    public class MoveManager
     {
         //will return null in no piece is on selected space
         public static List<Block> FindAvailableMoveSpaces(Board gameBoard, Block block)
@@ -49,26 +49,95 @@ namespace BasicChess.Rules
             return availableSpaces;
         }
 
-        //These methods are where special conditions are set before calling find strait and diagnal space methods
+        //These methods are where special conditions are set before/after calling find strait and diagnal space methods
+        //the knight method is the exception
         private static List<Block> FindAvaliableKnightSpaces(Board gameBoard, Block currentBlock)
         {
-            List<Block> availableSpaces;
-            return null;
+            List<Block> availableSpaces = new List<Block>();
+            
+            int x = currentBlock.X - 1;
+            int y = currentBlock.Y - 1;
+            //up 2 right 1
+            if(x <= 6 && y<= 5)
+            {
+                if(gameBoard.Blocks[x+1, y+2].ChessPiece == null || !gameBoard.Blocks[x+1, y+2].ChessPiece.Color.Equals(currentBlock.ChessPiece.Color))
+                {
+                    availableSpaces.Add(gameBoard.Blocks[x + 1, y + 2]);
+                }
+            }
+            //up 2 left 1
+            if (x >= 1 && y <= 5)
+            {
+                if (gameBoard.Blocks[x - 1, y + 2].ChessPiece == null || !gameBoard.Blocks[x - 1, y + 2].ChessPiece.Color.Equals(currentBlock.ChessPiece.Color))
+                {
+                    availableSpaces.Add(gameBoard.Blocks[x - 1, y + 2]);
+                }
+            }
+            //left 2 up 1
+            if (x >= 2 && y <= 6)
+            {
+                if (gameBoard.Blocks[x - 2, y + 1].ChessPiece == null || !gameBoard.Blocks[x - 2, y + 1].ChessPiece.Color.Equals(currentBlock.ChessPiece.Color))
+                {
+                    availableSpaces.Add(gameBoard.Blocks[x - 2, y + 1]);
+                }
+            }
+            //left 2 down 1
+            if (x >= 2 && y >= 1)
+            {
+                if (gameBoard.Blocks[x - 2, y - 1].ChessPiece == null || !gameBoard.Blocks[x - 2, y - 1].ChessPiece.Color.Equals(currentBlock.ChessPiece.Color))
+                {
+                    availableSpaces.Add(gameBoard.Blocks[x - 2, y - 1]);
+                }
+            }
+            //down 2 left 1
+            if (x >= 1 && y >= 2)
+            {
+                if (gameBoard.Blocks[x - 1, y - 2].ChessPiece == null || !gameBoard.Blocks[x - 1, y - 2].ChessPiece.Color.Equals(currentBlock.ChessPiece.Color))
+                {
+                    availableSpaces.Add(gameBoard.Blocks[x - 1, y - 2]);
+                }
+            }
+            //down 2 right 1
+            if (x <= 6 && y >= 2)
+            {
+                if (gameBoard.Blocks[x + 1, y - 2].ChessPiece == null || !gameBoard.Blocks[x + 1, y - 2].ChessPiece.Color.Equals(currentBlock.ChessPiece.Color))
+                {
+                    availableSpaces.Add(gameBoard.Blocks[x + 1, y - 2]);
+                }
+            }
+            //right 2 down 1
+            if (x <= 5 && y >= 1)
+            {
+                if (gameBoard.Blocks[x + 2, y - 1].ChessPiece == null || !gameBoard.Blocks[x + 2, y - 1].ChessPiece.Color.Equals(currentBlock.ChessPiece.Color))
+                {
+                    availableSpaces.Add(gameBoard.Blocks[x + 2, y - 1]);
+                }
+            }
+            //right 2 up 1
+            if (x <= 5 && y <= 6)
+            {
+                if (gameBoard.Blocks[x + 2, y + 1].ChessPiece == null || !gameBoard.Blocks[x + 2, y + 1].ChessPiece.Color.Equals(currentBlock.ChessPiece.Color))
+                {
+                    availableSpaces.Add(gameBoard.Blocks[x + 2, y + 1]);
+                }
+            }
+            return availableSpaces;
         }
 
         private static List<Block> FindAvaliableRookSpaces(Board gameBoard, Block currentBlock)
         {
-            List<Block> availableSpaces;
-            return null;
+            List<Block> availableSpaces = FindAvaliableStraitSpaces(gameBoard, currentBlock);
+            return availableSpaces;
         }
         private static List<Block> FindAvaliableBishopSpaces(Board gameBoard, Block currentBlock)
         {
-            List<Block> availableSpaces;
-            return null;
+            List<Block> availableSpaces = FindAvaliableDiagonalSpaces(gameBoard, currentBlock);
+            return availableSpaces;
         }
         private static List<Block> FindAvaliablePawnSpaces(Board gameBoard, Block currentBlock)
         {
-            List<Block> availableSpaces = null;
+            List<Block> availableSpaces = new List<Block>();
+            List<Block> tempSpaces = null;
             if(currentBlock.ChessPiece.MaxMoves == 2)
             {
                 currentBlock.ChessPiece.MaxMoves = 1;
@@ -77,28 +146,80 @@ namespace BasicChess.Rules
             {
                 currentBlock.ChessPiece.MaxMoves = 2;
             }
+            tempSpaces = FindAvaliableStraitSpaces(gameBoard, currentBlock);
+            
+            //keep pawn from moving in reverse && sidways
+            if (currentBlock.ChessPiece.PlayerId == 1)
+            {
+                foreach (Block space in tempSpaces)
+                {
+                    if (space.Y > currentBlock.Y)
+                    {
+                        availableSpaces.Add(space);
+                    }
+                }
+            }
+            else
+            {
+                foreach (Block space in tempSpaces)
+                {
+                    if (space.Y < currentBlock.Y)
+                    {
+                        availableSpaces.Add(space);
+                    }
+                }
+            }
+
+            //only add side moves if they are a attack
+            tempSpaces = FindAvaliableDiagonalSpaces(gameBoard, currentBlock);
+            if (currentBlock.ChessPiece.PlayerId == 1)
+            {
+                foreach (Block space in tempSpaces)
+                {
+                    if (space.Y > currentBlock.Y && space.Y == currentBlock.Y +1 && space.ChessPiece != null)
+                    {
+                        availableSpaces.Add(space);
+                    }
+                }
+            }
+            else
+            {
+                foreach (Block space in tempSpaces)
+                {
+                    if (space.Y < currentBlock.Y && space.Y == currentBlock.Y + 1 && space.ChessPiece != null)
+                    {
+                        availableSpaces.Add(space);
+                    }
+                }
+            }
+
 
             return availableSpaces;
             
         }
         private static List<Block> FindAvaliableKingSpaces(Board gameBoard, Block currentBlock)
         {
-            List<Block> availableSpaces;
-            return null;
+            List<Block> availableSpaces = FindAvaliableStraitSpaces(gameBoard, currentBlock);
+            availableSpaces.AddRange(FindAvaliableDiagonalSpaces(gameBoard, currentBlock));
+            return availableSpaces;
         }
         private static List<Block> FindAvaliableQueenSpaces(Board gameBoard, Block currentBlock)
         {
-            List<Block> availableSpaces;
-            return null;
+            List<Block> availableSpaces = FindAvaliableStraitSpaces(gameBoard, currentBlock);
+            availableSpaces.AddRange(FindAvaliableDiagonalSpaces(gameBoard, currentBlock));
+            return availableSpaces;
         }
 
+
+
+        //Basic available space methods
         private static List<Block> FindAvaliableStraitSpaces(Board gameBoard, Block currentBlock)
         {
             List<Block> availableSpaces = new List<Block>();
             int x = currentBlock.X -1;
             int y = currentBlock.Y -1;
             int maxSpaces = currentBlock.ChessPiece.MaxMoves;
-            int maxCount = 0;
+            int maxCount = 1;
             int count = 0;
             //check up
             if (y < 7)
@@ -126,7 +247,7 @@ namespace BasicChess.Rules
 
             //check down
             count = 0;
-            maxCount = 0;
+            maxCount = 1;
             if (y > 0)
             {
                 count = y - 1;
@@ -153,7 +274,7 @@ namespace BasicChess.Rules
             
             //check left
             count = 0;
-            maxCount = 0;
+            maxCount = 1;
             if (x > 0)
             {
                 count = x - 1;
@@ -179,7 +300,7 @@ namespace BasicChess.Rules
             
             //check right
             count = 0;
-            maxCount = 0;
+            maxCount = 1;
             if (x < 7)
             {
                 count = x + 1;
@@ -213,7 +334,7 @@ namespace BasicChess.Rules
             int x = currentBlock.X - 1;
             int y = currentBlock.Y - 1;
             int maxSpaces = currentBlock.ChessPiece.MaxMoves;
-            int maxCount = 0;     
+            int maxCount = 1;     
             int xCount = 0;
             int yCount = 0;
 
@@ -244,6 +365,7 @@ namespace BasicChess.Rules
                 }
             }
             //check up/left
+            maxCount = 1;
             if (x != 0 && y != 7)
             {
                 xCount = x - 1;
@@ -271,6 +393,7 @@ namespace BasicChess.Rules
             }
 
             //check down/left
+            maxCount = 1;
             if (x != 0 && y != 0)
             {
                 xCount = x - 1;
@@ -298,6 +421,7 @@ namespace BasicChess.Rules
             }
 
             //check down/right
+            maxCount = 1;
             if (x != 7 && y != 0)
             {
                 xCount = x + 1;

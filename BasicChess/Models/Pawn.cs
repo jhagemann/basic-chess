@@ -9,13 +9,14 @@ namespace BasicChess.Models
     public class Pawn : Piece
     {
         
-        public Pawn(String color, int id, bool isUp)
+        public Pawn(String color, int id, int playerId)
         {
             Name = "Pawn";
             Alive = true;
             this.Color = color;
             this.Id = id;
             MaxMoves = 1;
+            PlayerId = playerId;
         }
     }
 }
