@@ -56,6 +56,7 @@ namespace BasicChess.Rules
             {
                 GameBoard.Blocks[x, 6].ChessPiece = Players[1].Pieces.First(p => p.Name == "Pawn" && p.Id == x + 1);
             }
+            MoveScopeManager.ScopeBoard(GameBoard);
         }
     }
 }

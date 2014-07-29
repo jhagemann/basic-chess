@@ -73,6 +73,7 @@ namespace BasicChess.Models
             String layout = "";
             for (int y = 7; y >= 0; y--)
             {
+                layout += y + 1 + "\t";
                 for (int x = 0; x < 8; x++)
                 {
                     if (Blocks[x, y].ChessPiece == null)
@@ -114,6 +115,7 @@ namespace BasicChess.Models
                 layout += "\n";
                 
             }
+            layout += " \ta\tb\tc\td\te\tf\tg\th\t\n";
             return layout;            
         }
 

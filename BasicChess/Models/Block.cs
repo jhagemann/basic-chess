@@ -10,6 +10,8 @@ namespace BasicChess.Models
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public bool WithinP1Scope { get; set; }
+        public bool WithinP2Scope { get; set; }
         public Piece ChessPiece { get; set; }
 
         public Block(int x,int y)

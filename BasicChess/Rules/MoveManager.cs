@@ -450,15 +450,21 @@ namespace BasicChess.Rules
             return availableSpaces;
         }
 
-        public static void MakeMove(Board gameBaord, Block startBlock, Block endBlock)
+        public static void MakeMove(Board gameBoard, Block startBlock, Block endBlock)
         {
+            MoveScopeManager.AlterScope(gameBoard ,startBlock);
             if (endBlock.ChessPiece != null)
             {
                 endBlock.ChessPiece.Alive = false;
                 
             }
+            if (startBlock.ChessPiece.HasMoved == false)
+            {
+                startBlock.ChessPiece.HasMoved = true;
+            }
             endBlock.ChessPiece = startBlock.ChessPiece;
             startBlock.ChessPiece = null;
+            MoveScopeManager.ScopeBoard(gameBoard);
         }
 
         
