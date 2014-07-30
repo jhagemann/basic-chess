@@ -12,15 +12,46 @@ namespace BasicChess.Rules
         public static void ScopeBoard(Board gameBoard)
         {
             List<Block> spaces = null;
+            Piece chessPiece = null;
+            int player;
             for (int x = 0; x < 8; x++)
             {
                 for (int y = 0; y < 8; y++)
                 {
-                    if (gameBoard.Blocks[x, y].ChessPiece != null)
+                    chessPiece = gameBoard.Blocks[x, y].ChessPiece;
+                    
+                    if (chessPiece != null)
                     {
-                        spaces = MoveManager.FindAvailableMoveSpaces(gameBoard,gameBoard.Blocks[x, y]);
-                        int player = gameBoard.Blocks[x, y].ChessPiece.PlayerId;
-                        
+                        player = chessPiece.PlayerId;
+                        if (!chessPiece.Name.Equals("Pawn"))
+                        {
+                            spaces = MoveManager.FindAvailableMoveSpaces(gameBoard, gameBoard.Blocks[x, y]);
+                        }
+                        else
+                        {
+                            List<Block> tempSpaces = null;
+                            bool reset = false;
+                            if (chessPiece.MaxMoves == 2)
+                            {
+                                chessPiece.MaxMoves = 1;
+                                reset = true;
+                            }
+                            tempSpaces = MoveManager.FindAvaliableDiagonalSpaces(gameBoard, gameBoard.Blocks[x, y]);
+                            if (player == 1)
+                            {
+                                spaces = tempSpaces.FindAll(b => b.Y - 1 > y);
+                            }
+                            else
+                            {
+                                spaces = tempSpaces.FindAll(b => b.Y - 1 < y);
+                            }
+
+                            if (reset)
+                            {
+                                chessPiece.MaxMoves = 2;
+                            }
+                            
+                        }
                         foreach (Block space in spaces)
                         {
                             if (player == 1)

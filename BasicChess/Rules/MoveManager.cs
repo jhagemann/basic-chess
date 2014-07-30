@@ -151,46 +151,23 @@ namespace BasicChess.Rules
             //keep pawn from moving in reverse && sidways
             if (currentBlock.ChessPiece.PlayerId == 1)
             {
-                foreach (Block space in tempSpaces)
-                {
-                    if (space.Y > currentBlock.Y)
-                    {
-                        availableSpaces.Add(space);
-                    }
-                }
+                availableSpaces.AddRange(tempSpaces.FindAll(b => b.Y > currentBlock.Y));                
             }
             else
             {
-                foreach (Block space in tempSpaces)
-                {
-                    if (space.Y < currentBlock.Y)
-                    {
-                        availableSpaces.Add(space);
-                    }
-                }
+                availableSpaces.AddRange(tempSpaces.FindAll(b => b.Y < currentBlock.Y));  
             }
 
             //only add side moves if they are a attack
             tempSpaces = FindAvaliableDiagonalSpaces(gameBoard, currentBlock);
             if (currentBlock.ChessPiece.PlayerId == 1)
             {
-                foreach (Block space in tempSpaces)
-                {
-                    if (space.Y > currentBlock.Y && space.Y == currentBlock.Y +1 && space.ChessPiece != null)
-                    {
-                        availableSpaces.Add(space);
-                    }
-                }
+                availableSpaces.AddRange(tempSpaces.FindAll(b => b.Y > currentBlock.Y && b.Y == currentBlock.Y + 1 && b.ChessPiece != null));
+               
             }
             else
             {
-                foreach (Block space in tempSpaces)
-                {
-                    if (space.Y < currentBlock.Y && space.Y == currentBlock.Y + 1 && space.ChessPiece != null)
-                    {
-                        availableSpaces.Add(space);
-                    }
-                }
+                availableSpaces.AddRange(tempSpaces.FindAll(b => b.Y < currentBlock.Y && b.Y == currentBlock.Y - 1 && b.ChessPiece != null));
             }
 
 
@@ -199,8 +176,18 @@ namespace BasicChess.Rules
         }
         private static List<Block> FindAvaliableKingSpaces(Board gameBoard, Block currentBlock)
         {
-            List<Block> availableSpaces = FindAvaliableStraitSpaces(gameBoard, currentBlock);
-            availableSpaces.AddRange(FindAvaliableDiagonalSpaces(gameBoard, currentBlock));
+            List<Block> tempSpaces= FindAvaliableStraitSpaces(gameBoard, currentBlock);
+            tempSpaces.AddRange(FindAvaliableDiagonalSpaces(gameBoard, currentBlock));
+            List<Block> availableSpaces = new List<Block>();
+            int player = currentBlock.ChessPiece.PlayerId;
+            if (player == 1)
+            {
+                availableSpaces.AddRange(tempSpaces.FindAll(b => b.WithinP2Scope == false));
+            }
+            else
+            {
+                availableSpaces.AddRange(tempSpaces.FindAll(b => b.WithinP1Scope == false));
+            }
             return availableSpaces;
         }
         private static List<Block> FindAvaliableQueenSpaces(Board gameBoard, Block currentBlock)
@@ -213,7 +200,7 @@ namespace BasicChess.Rules
 
 
         //Basic available space methods
-        private static List<Block> FindAvaliableStraitSpaces(Board gameBoard, Block currentBlock)
+        public static List<Block> FindAvaliableStraitSpaces(Board gameBoard, Block currentBlock)
         {
             List<Block> availableSpaces = new List<Block>();
             int x = currentBlock.X -1;
@@ -328,7 +315,7 @@ namespace BasicChess.Rules
 
 
 
-        private static List<Block> FindAvaliableDiagonalSpaces(Board gameBoard, Block currentBlock)
+        public static List<Block> FindAvaliableDiagonalSpaces(Board gameBoard, Block currentBlock)
         {
             List<Block> availableSpaces = new List<Block>();
             int x = currentBlock.X - 1;

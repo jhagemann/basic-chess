@@ -119,6 +119,35 @@ namespace BasicChess.Models
             return layout;            
         }
 
+        public string ScopePrint()
+        {
+            String layout = "";
+            for (int y = 7; y >= 0; y--)
+            {
+                layout += y + 1 + "\t";
+                for (int x = 0; x < 8; x++)
+                {
+                    if (Blocks[x, y].WithinP1Scope)
+                    {
+                        layout += "1";
+                    }
+                    if (Blocks[x, y].WithinP2Scope)
+                    {
+                        layout += "2";
+                    }
+                    if (!Blocks[x, y].WithinP1Scope && !Blocks[x, y].WithinP2Scope)
+                    {
+                        layout += "-";
+                    }
+                    layout += "\t";
+                }
+                layout += "\n";
+            }
+
+            layout += " \ta\tb\tc\td\te\tf\tg\th\t\n";
+            return layout; 
+        }
+
         
     }
 }
