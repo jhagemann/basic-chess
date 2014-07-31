@@ -206,6 +206,10 @@ namespace BasicChess.Rules
             int x = currentBlock.X -1;
             int y = currentBlock.Y -1;
             int maxSpaces = currentBlock.ChessPiece.MaxMoves;
+            if (maxSpaces < 0)
+            {
+                maxSpaces = 8;
+            }
             int maxCount = 1;
             int count = 0;
             //check up
@@ -321,6 +325,10 @@ namespace BasicChess.Rules
             int x = currentBlock.X - 1;
             int y = currentBlock.Y - 1;
             int maxSpaces = currentBlock.ChessPiece.MaxMoves;
+            if (maxSpaces < 0)
+            {
+                maxSpaces = 8;
+            }
             int maxCount = 1;     
             int xCount = 0;
             int yCount = 0;
