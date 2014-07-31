@@ -9,10 +9,18 @@ namespace BasicChess.Models
     public class Board
     {
         public Block[,] Blocks { get; set; }
-
+        public static Dictionary<string, int> xDictionary = new Dictionary<string, int>();
         public Board()
         {
             Blocks = new Block[8, 8];
+            xDictionary.Add("a", 0);
+            xDictionary.Add("b", 1);
+            xDictionary.Add("c", 2);
+            xDictionary.Add("d", 3);
+            xDictionary.Add("e", 4);
+            xDictionary.Add("f", 5);
+            xDictionary.Add("g", 6);
+            xDictionary.Add("h", 7);
             BuildBoard();
         }
 
@@ -30,41 +38,10 @@ namespace BasicChess.Models
 
 
         public Block FindBlock(String blockName)
-        {
-            String x = blockName.Substring(0, 1);
-            int x2 = -1;
-            switch (x)
-            {
-                case "a":
-                    x2 = 0;
-                    break;
-                case "b":
-                    x2 = 1;
-                    break;
-                case "c":
-                    x2 = 2;
-                    break;
-                case "d":
-                    x2 = 3;
-                    break;
-                case "e":
-                    x2 = 4;
-                    break;
-                case "f":
-                    x2 = 5;
-                    break;
-                case "g":
-                    x2 = 6;
-                    break;
-                case "h":
-                    x2 = 7;
-                    break;
-                default:
-                    break;
-            }
-
-            int y = Convert.ToInt16(blockName.Substring(1, 1));
-            return Blocks[x2, y];
+        {            
+            int x = xDictionary[blockName.Substring(0, 1)];
+            int y = Convert.ToInt16(blockName.Substring(1, 1)) - 1;
+            return Blocks[x, y];
         }
 
 

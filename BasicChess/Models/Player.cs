@@ -12,6 +12,8 @@ namespace BasicChess.Models
         public String Name { get; set; }
         public Piece[] Pieces { get; set; }
         public String Color { get; set; }
+        public bool IsWinner { get; set; }
+        public bool InCheck { get; set; }
 
         public Player(int id, String name, String color)
         {
