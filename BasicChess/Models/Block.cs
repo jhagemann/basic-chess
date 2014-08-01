@@ -20,6 +20,23 @@ namespace BasicChess.Models
             this.Y = y;
         }
 
+        public Block Clone()
+        {
+            Block block = new Block(this.X, this.Y)
+            {                
+                WithinP1Scope = this.WithinP1Scope,
+                WithinP2Scope = this.WithinP2Scope,                
+                
+            };
+
+            if (this.ChessPiece != null)
+            {
+                block.ChessPiece = this.ChessPiece.Clone();
+            }
+
+            return block;
+        }
+
         public String Name()
         {
             String name = "";

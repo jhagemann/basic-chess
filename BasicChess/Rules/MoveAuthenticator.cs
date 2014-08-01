@@ -10,7 +10,7 @@ namespace BasicChess.Rules
     public class MoveAuthenticator
     {  
         //simply validates the input is a space on the board
-        public static bool IsValidSpace(Game game, String choice)
+        public static bool IsValidSpace(String choice)
         {
             bool valid = false;
             if(choice.Length !=2)
@@ -36,12 +36,13 @@ namespace BasicChess.Rules
             return valid;
         }
 
+
         //validates that the space that was chosen contians a piece belonging to that player
-        public static bool IsValidPieceChoice(Game game, bool player1Turn, String choice)
+        public static bool IsValidPieceChoice(Game game, String choice)
         {
             bool valid = false;
 
-            if (!IsValidSpace(game, choice))
+            if (!IsValidSpace(choice))
             {
                 return valid;
             }
@@ -53,38 +54,25 @@ namespace BasicChess.Rules
                 return valid;
             }
 
-            if (block.ChessPiece.PlayerId == 1 && player1Turn)
+            if (block.ChessPiece.PlayerId == 1 && game.Player1Turn)
             {
                 valid = true;
             }
-            else if (block.ChessPiece.PlayerId == 2 && !player1Turn)
+            else if (block.ChessPiece.PlayerId == 2 && !game.Player1Turn)
             {
                 valid = true;
             }
-            if (valid)
-            {
-                Block space = game.GameBoard.FindBlock(choice);
-                List<Block> moves = MoveManager.FindAvailableMoveSpaces(game.GameBoard, space);
-                if (moves.Count == 0)
-                {
-                    valid = false;
-                }
-            }
+            
             return valid;
         }
 
 
-        public static bool IsValidMoveChoice(Game game, Block startBlock, String choice)
+        public static bool IsValidMoveChoice(Block EndBlock, List<Block> choices)
         {
-            bool valid = false;
-            Block endBlock = game.GameBoard.FindBlock(choice);
-
-            List<Block> moves = MoveManager.FindAvailableMoveSpaces(game.GameBoard, startBlock);
-            if (moves.Contains(endBlock))
-            {
-                valid = true;
-            }
-            return valid;
+            return choices.Contains(EndBlock);
         }
+
+           
+
     }
 }

@@ -15,6 +15,9 @@ namespace BasicChess.Rules
             Piece chessPiece = null;
             Board gameBoard = game.GameBoard;
             int player;
+            bool p1CheckRan = false;
+            bool p2CheckRan = false;
+
             for (int x = 0; x < 8; x++)
             {
                 for (int y = 0; y < 8; y++)
@@ -61,6 +64,7 @@ namespace BasicChess.Rules
                                 if (space.ChessPiece != null && space.ChessPiece.Name.Equals("King") && space.ChessPiece.PlayerId == 2)
                                 {
                                     game.Players[1].InCheck = true;
+                                    p2CheckRan = true;
                                 }
                             }
                             else
@@ -69,11 +73,21 @@ namespace BasicChess.Rules
                                 if (space.ChessPiece != null && space.ChessPiece.Name.Equals("King") && space.ChessPiece.PlayerId == 1)
                                 {
                                     game.Players[0].InCheck = true;
+                                    p1CheckRan = true;
                                 }
                             }
                         }
                     }
                 }
+            }
+            //need to check if player is out of check
+            if (!p1CheckRan)
+            {
+                game.Players[0].InCheck = false;
+            }
+            if (!p2CheckRan)
+            {
+                game.Players[1].InCheck = false;
             }
         }
 

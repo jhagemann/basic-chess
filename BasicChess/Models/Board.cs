@@ -9,10 +9,20 @@ namespace BasicChess.Models
     public class Board
     {
         public Block[,] Blocks { get; set; }
-        public static Dictionary<string, int> xDictionary = new Dictionary<string, int>();
+        public static Dictionary<string, int> xDictionary;
         public Board()
         {
             Blocks = new Block[8, 8];
+            if (xDictionary == null)
+            {
+                BuildDictionary();
+            }
+            BuildBoard();
+        }
+
+        public void BuildDictionary()
+        {
+            xDictionary = new Dictionary<string, int>();
             xDictionary.Add("a", 0);
             xDictionary.Add("b", 1);
             xDictionary.Add("c", 2);
@@ -21,7 +31,6 @@ namespace BasicChess.Models
             xDictionary.Add("f", 5);
             xDictionary.Add("g", 6);
             xDictionary.Add("h", 7);
-            BuildBoard();
         }
 
         public void BuildBoard()
@@ -36,6 +45,18 @@ namespace BasicChess.Models
             }
         }
 
+        public Board Clone()
+        {
+            Board board = new Board();
+            for (int x = 1; x <= 8; x++)
+            {
+                for (int y = 1; y <= 8; y++)
+                {
+                    board.Blocks[x - 1, y - 1] = this.Blocks[x - 1,y - 1].Clone();
+                }
+            }
+            return board;            
+        }
 
         public Block FindBlock(String blockName)
         {            
@@ -89,7 +110,7 @@ namespace BasicChess.Models
                         }
                     }
                 }
-                layout += "\n";
+                layout += "\n\n";
                 
             }
             layout += " \ta\tb\tc\td\te\tf\tg\th\t\n";
@@ -118,7 +139,7 @@ namespace BasicChess.Models
                     }
                     layout += "\t";
                 }
-                layout += "\n";
+                layout += "\n\n";
             }
 
             layout += " \ta\tb\tc\td\te\tf\tg\th\t\n";

@@ -17,5 +17,23 @@ namespace BasicChess.Models
         //-1 is infinite
         public int MaxMoves { get; set; }
         
+        public Piece Clone()
+        {
+            
+            Piece piece = new Piece()
+            {
+                Name = (String)this.Name.Clone(),
+                Alive = this.Alive,
+                Color = (String)this.Color.Clone(),
+                Id = this.Id,
+                HasMoved = this.HasMoved,
+                PlayerId = this.PlayerId,
+                MaxMoves = this.MaxMoves
+            };
+
+            return piece;
+        }
     }
+
+   
 }

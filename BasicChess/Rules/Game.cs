@@ -10,7 +10,7 @@ namespace BasicChess.Rules
     public class Game
     {
         public bool HasWinner { get; set; }
-        public int PlayersTurn { get; set; }
+        public bool Player1Turn { get; set; }
         public Player[] Players { get; set; }
         public Board GameBoard { get; set; }
 

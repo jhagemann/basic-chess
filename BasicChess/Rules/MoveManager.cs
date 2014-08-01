@@ -445,10 +445,8 @@ namespace BasicChess.Rules
             return availableSpaces;
         }
 
-        public static void MakeMove(Game game, Block startBlock, Block endBlock)
-        {
-            Board gameBoard = game.GameBoard;
-            MoveScopeManager.AlterScope(gameBoard ,startBlock);
+        public static void MakeMove(Board gameBoard, Block startBlock, Block endBlock)
+        {              
             if (endBlock.ChessPiece != null)
             {
                 endBlock.ChessPiece.Alive = false;
@@ -460,7 +458,7 @@ namespace BasicChess.Rules
             }
             endBlock.ChessPiece = startBlock.ChessPiece;
             startBlock.ChessPiece = null;
-            MoveScopeManager.ScopeBoard(game);
+            
         }
 
         
