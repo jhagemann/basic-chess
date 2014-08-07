@@ -38,7 +38,7 @@ namespace ChessForm
                     {
                         string color = chessGame.GameBoard.Blocks[x, y].ChessPiece.Color;
                         string name = chessGame.GameBoard.Blocks[x, y].ChessPiece.Name.Substring(0,1);
-                        System.Drawing.Icon c = new Icon(@"c:\\Users\jhagemann\Source\Repos\BasicChess\ChessForm\img\"+ color + " " + name + ".ico");
+                        System.Drawing.Icon c = new Icon("../../img/"+ color + " " + name + ".ico");
                         pc[x, y].Image = c.ToBitmap();
                     }
                 }
