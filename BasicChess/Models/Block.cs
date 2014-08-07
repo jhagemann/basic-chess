@@ -13,6 +13,7 @@ namespace BasicChess.Models
         public bool WithinP1Scope { get; set; }
         public bool WithinP2Scope { get; set; }
         public Piece ChessPiece { get; set; }
+        public Piece PhantomPiece { get; set; }
 
         public Block(int x,int y)
         {

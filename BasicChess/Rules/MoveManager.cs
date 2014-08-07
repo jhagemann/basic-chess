@@ -446,18 +446,33 @@ namespace BasicChess.Rules
         }
 
         public static void MakeMove(Board gameBoard, Block startBlock, Block endBlock)
-        {              
-            if (endBlock.ChessPiece != null)
+        {
+            if (gameBoard.IsClone == true && startBlock.PhantomPiece != null)
             {
-                endBlock.ChessPiece.Alive = false;
-                
+                endBlock.ChessPiece = startBlock.ChessPiece;
+                startBlock.ChessPiece = startBlock.PhantomPiece;
+                startBlock.PhantomPiece = null;
             }
-            if (startBlock.ChessPiece.HasMoved == false)
+            else if (gameBoard.IsClone == true && endBlock.ChessPiece != null)
             {
-                startBlock.ChessPiece.HasMoved = true;
+                endBlock.PhantomPiece = endBlock.ChessPiece;
+                endBlock.ChessPiece = startBlock.ChessPiece;
+                startBlock.ChessPiece = null;
             }
-            endBlock.ChessPiece = startBlock.ChessPiece;
-            startBlock.ChessPiece = null;
+            else
+            {
+                if (endBlock.ChessPiece != null)
+                {
+                    endBlock.ChessPiece.Alive = false;
+
+                }
+                if (startBlock.ChessPiece.HasMoved == false)
+                {
+                    startBlock.ChessPiece.HasMoved = true;
+                }
+                endBlock.ChessPiece = startBlock.ChessPiece;
+                startBlock.ChessPiece = null;
+            }
             
         }
 

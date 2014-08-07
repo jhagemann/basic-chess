@@ -9,6 +9,7 @@ namespace BasicChess.Models
     public class Board
     {
         public Block[,] Blocks { get; set; }
+        public bool IsClone { get; set; }
         public static Dictionary<string, int> xDictionary;
         public Board()
         {
@@ -48,6 +49,7 @@ namespace BasicChess.Models
         public Board Clone()
         {
             Board board = new Board();
+            board.IsClone = true;
             for (int x = 1; x <= 8; x++)
             {
                 for (int y = 1; y <= 8; y++)
@@ -69,6 +71,7 @@ namespace BasicChess.Models
         public override string ToString()
         {
             String layout = "";
+            int player;
             for (int y = 7; y >= 0; y--)
             {
                 layout += y + 1 + "\t";
@@ -78,35 +81,36 @@ namespace BasicChess.Models
                     {
                         layout += "-\t";
                     }
-                    else
+                    else                        
                     {
+                        player = Blocks[x, y].ChessPiece.PlayerId;
                         if (Blocks[x, y].ChessPiece.Name.Equals("Pawn"))
                         {
-                            layout += "P\t";
+                            layout += "P" + player + "\t";
                         }
                         else if (Blocks[x, y].ChessPiece.Name.Equals("Rook"))
                         {
-                            layout += "R\t";
+                            layout += "R" + player + "\t";
                         }
                         else if (Blocks[x, y].ChessPiece.Name.Equals("Knight"))
                         {
-                            layout += "N\t";
+                            layout += "N" + player + "\t";
                         }
                         else if (Blocks[x, y].ChessPiece.Name.Equals("Bishop"))
                         {
-                            layout += "B\t";
+                            layout += "B" + player + "\t";
                         }
                         else if (Blocks[x, y].ChessPiece.Name.Equals("Queen"))
                         {
-                            layout += "Q\t";
+                            layout += "Q" + player + "\t";
                         }
                         else if (Blocks[x, y].ChessPiece.Name.Equals("King"))
                         {
-                            layout += "K\t";
+                            layout += "K" + player + "\t";
                         }
                         else
                         {
-                            layout += "?\t";
+                            layout += "?" + player + "\t";
                         }
                     }
                 }

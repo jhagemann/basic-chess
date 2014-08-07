@@ -67,9 +67,26 @@ namespace BasicChess.Rules
         }
 
 
-        public static bool IsValidMoveChoice(Block EndBlock, List<Block> choices)
+        public static bool IsValidMoveChoice(Game game, String choice)
         {
-            return choices.Contains(EndBlock);
+            bool valid = false;
+            if (!IsValidSpace(choice))
+            {
+                return valid;
+            }
+
+            Block endBlock = game.GameBoard.FindBlock(choice);
+            int player = game.Player1Turn? 1 : 2;
+            if (endBlock.ChessPiece == null)
+            {
+                valid = true;
+            }
+            else if (endBlock.ChessPiece.PlayerId != player)
+            {
+                valid = true;
+            }
+
+            return valid;
         }
 
            

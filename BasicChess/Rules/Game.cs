@@ -59,6 +59,19 @@ namespace BasicChess.Rules
             MoveScopeManager.ScopeBoard(this);
         }
 
+        public void TestSetup()
+        {
+            GameBoard.Blocks[4, 0].ChessPiece = Players[0].Pieces.First(p => p.Name == "King" && p.Id == 1);
+            GameBoard.Blocks[4, 1].ChessPiece = Players[0].Pieces.First(p => p.Name == "Pawn" && p.Id == 1);
+            GameBoard.Blocks[3, 1].ChessPiece = Players[0].Pieces.First(p => p.Name == "Pawn" && p.Id == 2);
+            GameBoard.Blocks[5, 1].ChessPiece = Players[0].Pieces.First(p => p.Name == "Pawn" && p.Id == 3);
+            GameBoard.Blocks[5, 0].ChessPiece = Players[0].Pieces.First(p => p.Name == "Pawn" && p.Id == 4);
+            GameBoard.Blocks[1, 1].ChessPiece = Players[0].Pieces.First(p => p.Name == "Bishop" && p.Id == 2);
+
+            GameBoard.Blocks[0, 0].ChessPiece = Players[1].Pieces.First(p => p.Name == "Rook" && p.Id == 2);
+            MoveScopeManager.ScopeBoard(this);
+        }
+
         
     }
 }
